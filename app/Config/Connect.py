@@ -5,7 +5,7 @@ class Connect:
     def instance_method(self=''):
         conn = None
         try:
-            conn = sqlite3.connect('app/Databases/test.db')
+            conn = sqlite3.connect('app/Databases/kelompok_tiga.db')
         except Error as e:
             print(e)
 
