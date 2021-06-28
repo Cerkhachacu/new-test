@@ -5,15 +5,17 @@ class Tools:
     def clear(self='clear'):
         # for windows
         if name == 'nt':
-            _ = system('cls')
+            return  system('cls')
             # for mac and linux(here, os.name is 'posix')
         else:
-            _ = system('clear')
+           return system('clear')
+        
     def check_width(self=''):
         cmd = '''
         mode con: cols=220 lines=50
         '''
         system(cmd)
+        
     def sleep(self):
         return sleep(self)
 

@@ -38,10 +38,17 @@ def main():
         InvoiceController.index(conn)
         Tools.clear()
         main()
-    
+
+    if(a == 0):
+        Tools.clear()
+        print("                                    Quiting ...                               ")
+        Tools.sleep(2)
+        Tools.clear()
+
     else:
         print("Pilihan menu tidak ada!")
         Tools.sleep(2)
         Tools.clear()
         main()
+        
 main()

@@ -5,8 +5,8 @@ from app.Databases.Migrations.InvoiceDetailMigration import InvoiceDetaileMigrat
 
 class migrate:
     def migrate_and_seed_all(self):
-        MenuMigration.instance_method()
-        InvoiceMigration.instance_method()
-        InvoiceDetaileMigration.instance_method()
-        MenuSeeder.instance_method()
+        MenuMigration.instance_method(self)
+        InvoiceMigration.instance_method(self)
+        InvoiceDetaileMigration.instance_method(self)
+        MenuSeeder.instance_method(self)
         

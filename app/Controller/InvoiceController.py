@@ -22,6 +22,8 @@ class InvoiceController:
             Tools.sleep(2)
         else:
             print("Pilihan menu tidak ada!")
+            Tools.sleep(2)
+            Tools.clear()
             InvoiceController.index(self)
 
     def get_invoice(self, conn):
