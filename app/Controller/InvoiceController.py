@@ -16,9 +16,7 @@ class InvoiceController:
             InvoiceController.get_invoice(invoice_id, self)
         if(user_input == 0):
             Tools.clear()
-            print(print("""
-                                                Loading ...
-            """))
+            print("                                    Loading ...                               ")
             Tools.sleep(2)
         else:
             print("Pilihan menu tidak ada!")
