@@ -8,6 +8,7 @@
 ## How to run
 
 Make sure python3 is install on your computer:
+
 On the project root directory run this command to create database and migrate data :
 
 ```sh
