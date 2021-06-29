@@ -12,20 +12,20 @@ class OrderController:
         0. Kembali ke home
         """)
         user_input = int(input("    Masukkan pilihan kamu: "))
-        if(user_input == 1):
+        if user_input == 1:
             return OrderController.order(self)
 
-        if(user_input != 0):
-            print("Pilihan menu tidak ada!")
-            Tools.sleep(1)
-            Tools.clear()
-            return OrderController.index(self)
-            
-        else:
+        if user_input == 0:
             Tools.clear()
             print("                                    Loading ...                               ")
             Tools.sleep(1)
             Tools.clear()
+            
+        if user_input not in [0,1]:
+            print("Pilihan menu tidak ada!")
+            Tools.sleep(1)
+            Tools.clear()
+            return OrderController.index(self)
 
     def order(self):
         print()
@@ -59,7 +59,7 @@ class OrderController:
 
         print(json.dumps(response, indent=4, sort_keys=True))
 
-        input('\nSimpan invoice id ')
+        print('\nSimpan invoice id!')
         input("Tekan tombol Enter untuk kembali ... ")
 
         Tools.sleep(1)

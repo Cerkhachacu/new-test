@@ -17,15 +17,15 @@ class InvoiceController:
             InvoiceController.get_invoice(invoice_id, self)
             Tools.clear()
             InvoiceController.index(self)
-        if(user_input != 0):
+        if(user_input == 0):
+            Tools.clear()
+            print("                                    Loading ...                               ")
+            Tools.sleep(1)
+        if user_input not in [0,1]:
             print("Pilihan menu tidak ada!")
             Tools.sleep(1)
             Tools.clear()
             InvoiceController.index(self)
-        else:
-            Tools.clear()
-            print("                                    Loading ...                               ")
-            Tools.sleep(1)
 
     def get_invoice(self, conn):
         cur = conn.cursor()
