@@ -40,7 +40,6 @@ class OrderController:
             menu_ids.append(a[0])
             menus[a[0]] = [a[1], a[2]]
 
-        print(json.dumps(menus))
         print('    Input angka 0 (nol) jika sudah selesai melakukan pesanan.')
         orders = OrderController.place_order(menu_ids, {})
 
