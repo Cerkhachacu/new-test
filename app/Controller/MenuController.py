@@ -2,6 +2,7 @@ from app.Tools.Tools import Tools
 
 class MenuController:
     def index(self):
+        print("    ~Menu Data Master~")
         MenuController.get_menu_data(self)
         print("""
     Atur Menu:

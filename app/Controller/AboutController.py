@@ -2,7 +2,7 @@ class AboutController:
     def index(self="about"):
         border = "+----------------------------------------------------------+"
         border_len = len(border)
-        print("Kelompok 3")
+        print("About Kelompok 3")
         print(border)
         print("| NIK      | NAMA" + " " * (border_len - len("| NIK      | NAMA ")) + "|" )
         print(border)

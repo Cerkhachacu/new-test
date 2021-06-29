@@ -4,6 +4,7 @@ import json
 
 class OrderController:
     def index(self):
+        print("    ~Menu Pemesanan~")
         MenuController.get_menu_data(self, 1)
         print("""
     Ready for order :
