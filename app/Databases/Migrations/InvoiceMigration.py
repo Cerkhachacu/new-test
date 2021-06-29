@@ -5,7 +5,6 @@ class InvoiceMigration:
         self.execute('''
             CREATE TABLE IF NOT EXISTS invoices
                 (id INTEGER     PRIMARY KEY,
-                name           CHAR(50)    NOT NULL,
                 total         INT NOT NULL,
                 created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
                 updated_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime'))

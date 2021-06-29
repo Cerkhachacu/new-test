@@ -19,9 +19,17 @@ class Tools:
     def sleep(self):
         return sleep(self)
 
-    def validate_number_input(self = "Pilih Menu : "):
+    def validate_number_input(self = "Pilih Menu : ", btz=0, btzem='Input harus besar dari 0'):
         try:
-            return int(input(self))
+            input_user = int(input(self))
+            if btz == 0:
+                return input_user
+            
+            if input_user == 0:
+                print("Warning: {}".format(btzem))
+
+            return input_user
+                
         except ValueError:
             print("Warning : Input harus dalam bentuk angka!")
             return Tools.validate_number_input(self)

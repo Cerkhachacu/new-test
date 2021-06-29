@@ -43,6 +43,7 @@ def main():
     if(a == 0):
         Tools.clear()
         print("                                    Quiting ...                               ")
+        conn.close()
         Tools.sleep(2)
         Tools.clear()
         quit()
