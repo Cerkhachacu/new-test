@@ -9,6 +9,7 @@ from app.Controller.OrderController import OrderController
 conn = Connect.instance_method()
 
 HomeController.show_header()
+input("Tekan tombol Enter untuk mulai ... ")
 Tools.sleep(1)
 Tools.clear()
 
@@ -42,15 +43,16 @@ def main():
 
     if(a == 0):
         Tools.clear()
+        print("                                   Good Bye ...")
         print("                                    Quiting ...                               ")
         conn.close()
-        Tools.sleep(2)
+        Tools.sleep(1)
         Tools.clear()
         quit()
 
     else:
         print("Pilihan menu tidak ada!")
-        Tools.sleep(2)
+        Tools.sleep(1)
         Tools.clear()
         main()
         

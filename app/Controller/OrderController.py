@@ -14,17 +14,17 @@ class OrderController:
         if(user_input == 1):
             return OrderController.order(self)
 
-        if(user_input == 0):
-            Tools.clear()
-            print("                                    Loading ...                               ")
-            Tools.sleep(2)
-            return
-            
-        else:
+        if(user_input != 0):
             print("Pilihan menu tidak ada!")
-            Tools.sleep(2)
+            Tools.sleep(1)
             Tools.clear()
             return OrderController.index(self)
+            
+        else:
+            Tools.clear()
+            print("                                    Loading ...                               ")
+            Tools.sleep(1)
+            Tools.clear()
 
     def order(self):
         print()
@@ -52,11 +52,18 @@ class OrderController:
             response['data']['menus'][menus[key][1]] = orders[key]
 
         response['data']['total_harga'] = total_price
+
+        invoice_id = OrderController.insert_invoice_and_invoice_detail_record(self, orders_record, total_price)
         
+        response['data']['invoid_id'] = invoice_id
+
         print(json.dumps(response, indent=4, sort_keys=True))
 
-        Tools.sleep(2)
-        # Tools.clear()
+        input('\nSimpan invoice id ')
+        input("Tekan tombol Enter untuk kembali ... ")
+
+        Tools.sleep(1)
+        Tools.clear()
         OrderController.index(self)
 
     def place_order(self, orders):
@@ -77,8 +84,21 @@ class OrderController:
         
         return OrderController.place_order(self, orders)
 
-    def inset_invoice_and_invoice_detail_record(self):
-        print(self)
-        if(self != 0):
-            OrderController.test(self-1)
-        return self
+    def insert_invoice_and_invoice_detail_record(self, orders_data, total_price):
+        cur = self.cursor()
+        sql = ''' INSERT INTO invoices(total)
+              VALUES(?) '''
+
+        cur.execute(sql, [total_price])
+        invoice_id = cur.lastrowid
+
+        invoice_details = []
+        for menu in orders_data:
+            invoice_details.append([menu[0], menu[1], invoice_id])
+
+        sql = ''' INSERT INTO invoice_details(menu_id, qty, invoice_id)
+              VALUES(?,?,?) '''
+
+        cur.executemany(sql, invoice_details)
+        self.commit()
+        return invoice_id

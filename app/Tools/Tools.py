@@ -10,12 +10,6 @@ class Tools:
         else:
            return system('clear')
         
-    def check_width(self=''):
-        cmd = '''
-        mode con: cols=220 lines=50
-        '''
-        system(cmd)
-        
     def sleep(self):
         return sleep(self)
 

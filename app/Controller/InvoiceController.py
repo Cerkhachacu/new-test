@@ -1,3 +1,4 @@
+import json
 from app.Tools.Tools import Tools
 
 class InvoiceController:
@@ -14,26 +15,28 @@ class InvoiceController:
         if(user_input == 1):
             invoice_id = Tools.validate_number_input("Masukkan id invoice : ")
             InvoiceController.get_invoice(invoice_id, self)
-        if(user_input == 0):
-            Tools.clear()
-            print("                                    Loading ...                               ")
-            Tools.sleep(2)
-        else:
-            print("Pilihan menu tidak ada!")
-            Tools.sleep(2)
             Tools.clear()
             InvoiceController.index(self)
+        if(user_input != 0):
+            print("Pilihan menu tidak ada!")
+            Tools.sleep(1)
+            Tools.clear()
+            InvoiceController.index(self)
+        else:
+            Tools.clear()
+            print("                                    Loading ...                               ")
+            Tools.sleep(1)
 
     def get_invoice(self, conn):
         cur = conn.cursor()
-        cur.execute("SELECT * FROM invoices WHERE id = {}".format(self))
+        cur.execute("SELECT invoices.id, menus.name, menus.price, invoice_details.qty, invoices.total FROM invoices LEFT JOIN invoice_details ON invoices.id = invoice_details.invoice_id LEFT JOIN menus ON menus.id = invoice_details.menu_id WHERE invoices.id = {}".format(self))
 
         rows = cur.fetchall()
 
         InvoiceController.print_invoice_data(rows, self)
 
     def print_invoice_data(self, invoice_id):
-        border = "+-----------------------------------------------------------------------------------------------------------+"
+        border = "+---------------------------------------------------------------------------------------------------+"
         if (len(self) == 0):
             print( "    " + border)
             print( "    |" + " " * 35 + " Invoice dengan id  {} tidak ditemukan".format(invoice_id) + " " * 35 + "|")
@@ -41,28 +44,35 @@ class InvoiceController:
             return
         print('''
     {}
-    | Kode   | Nama              | Harga                 | Created At               | Updated At                |
-    | Menu   | Menu              |                       |                          |                           |
+    | Kode    | Nama              | Harga                 | Qty             | Total harga per pesanan   |
+    | Invoice | Menu              |                       |                 |                           |
     {}'''.format(border, border) )
 
         for i in range(len(self)):
             money_format = "{:,.0f}"
 
-            menu_id = str(self[i][0]) + (" " * (6 - len(str(self[i][0]))))
+            invoice_id = str(self[i][0]) + (" " * (7 - len(str(self[i][0]))))
 
             # field length 16 char
             menu_name = self[i][1] + (" " * (17 - len(self[i][1])))
 
             # field length 21 char
-            price = "Rp. " + money_format.format(self[i][2]) + ( " " * (21 - len("Rp. " + money_format.format(self[i][2]))))
+            price = "Rp. " + money_format.format(self[i][2]) + ( " " * (20 - len("Rp. " + money_format.format(self[i][2]))))
 
             
             # field length 21 char
-            created_at = self[i][3] + (" " * (24 - len(self[i][3])))
+            qty = str(self[i][3])
+            qty = qty + (" " * (16 - len(qty)))
 
-            updated_at = self[i][4] + (" " * (25 - len(self[i][4])))
+            total_per_menu = self[i][3] * self[i][2]
+            total_per_menu = "Rp. " + money_format.format(total_per_menu) + ( " " * (25 - len("Rp. " + money_format.format(total_per_menu))))
 
-            print("    | " + menu_id + " | " + menu_name + " | " + price +
-            " | " + created_at + " | " + updated_at + " | ")
-            print("    +-----------------------------------------------------------------------------------------------------------+")
+
+            print("    | " + invoice_id + " | " + menu_name + " | " + price +
+            " | " + qty + " | " + total_per_menu + " | ")
+            print("    " + border)
+        total = "Rp. " + money_format.format(self[i][4]) + ( " " * (25 - len("Rp. " + money_format.format(self[i][4]))))
+        print("    |                                                          Total Bayar  | {} |".format(total))
+        print("    " + border)
         print()
+        input("    Tekan Enter jika sudah selesai ...")

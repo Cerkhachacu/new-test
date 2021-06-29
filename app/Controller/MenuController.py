@@ -6,19 +6,35 @@ class MenuController:
         print("""
     Atur Menu:
         1. Tambah Menu
-        2. Update Menu
-        3. Delete Menu
+        2. Hapus Menu
         0. Kembali ke home
         """)
         user_input = int(input("    Masukkan pilihan kamu: "))
 
-        if user_input != 0:
-            print("Masih di menu ini")
-            Tools.sleep(2)
+        if user_input == 0:
+            Tools.sleep(1)
+            print("                                    Loading ...                               ")
             Tools.clear()
-            MenuController.get_menu_data(self)
-        else:
+            return
+
+        if user_input == 1:
             Tools.clear()
+            MenuController.add(self)
+            Tools.clear()
+            MenuController.index(self)
+        
+        if user_input == 2:
+            Tools.clear()
+            MenuController.delete(self)
+            Tools.clear()
+            MenuController.index(self)
+        
+        if user_input not in [0,1,2]:
+            print('    Menu tidak ditemukan')
+            Tools.sleep(1)
+            Tools.clear()
+            MenuController.index(self)
+
 
     def print_menu_data(self, is_master):
         header = '''
@@ -75,3 +91,49 @@ class MenuController:
         rows = cur.fetchall()
 
         MenuController.print_menu_data(rows, is_master)
+
+    def add(self):
+        cur = self.cursor()
+        print("    ~Tambah menu baru~")
+        print("    Tekan 0 untuk kembali")
+
+        name = input("    Masukkan nama menu: ")
+        if name == "0":
+            return
+
+        price = Tools.validate_number_input("    Masukkan harga: Rp. ")
+
+        sql = "INSERT INTO menus(name, price) VALUES(?,?)"
+        cur.execute(sql, [name, price])
+
+        self.commit()
+
+        print("    Menu baru berhasil ditambahkan ...")
+        Tools.sleep(1)
+
+    def delete(self):
+        cur = self.cursor()
+        print("    ~Hapus Menu~")
+        print("    Tekan 0 untuk kembali")
+
+        menu_id = Tools.validate_number_input("    Masukkan id menu: ")
+
+        if menu_id == 0:
+            return
+
+        cur.execute("SELECT * from menus WHERE id = {}".format(menu_id))
+
+        row = cur.fetchall()
+
+        if len(row) == 0:
+            print("    Menu dengan id yang dimasukkan tidak ditemukan.")
+            Tools.sleep(1)
+            Tools.clear()
+            MenuController.delete(self)
+        
+        cur.execute("DELETE FROM menus WHERE id = {}".format(menu_id))
+
+        self.commit()
+
+        print("    Menu berhasil dihapus.")
+        Tools.sleep(1)
