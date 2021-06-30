@@ -11,3 +11,5 @@ conn = Connect.instance_method()
 migrate.migrate_and_seed_all(conn)
 
 conn.close()
+
+input("Migration is finish press anything to exit ... ")
