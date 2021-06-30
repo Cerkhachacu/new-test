@@ -10,7 +10,7 @@ class MenuController:
         2. Hapus Menu
         0. Kembali ke home
         """)
-        user_input = int(input("    Masukkan pilihan kamu: "))
+        user_input = Tools.validate_number_input("    Masukkan pilihan kamu: ")
 
         if user_input == 0:
             Tools.sleep(1)
