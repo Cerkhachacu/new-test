@@ -45,21 +45,20 @@ class OrderController:
 
         orders_record = []
         total_price = 0
-        response = {'data': {'menus': {}}}
+        response = {'menus' : {}}
         for key in orders:
             orders_record.append([int(key), orders[key]])
             total_price += menus[key][0] * orders[key]
-            response['data']['menus'][menus[key][1]] = orders[key]
+            response['menus'][menus[key][1]] = orders[key]
 
-        response['data']['total_harga'] = total_price
 
         invoice_id = OrderController.insert_invoice_and_invoice_detail_record(self, orders_record, total_price)
         
-        response['data']['invoid_id'] = invoice_id
-
-        print(json.dumps(response, indent=4, sort_keys=True))
-
-        print('\nSimpan invoice id!')
+        Tools.clear()
+        print('No. Invoice = ', invoice_id)
+        print('Menu yang di pilih = {}'.format(json.dumps(response['menus'])))
+        print('Total Harga  = {}'.format(total_price))
+        print('\nSimpan No. ID Invoice Anda!')
         input("Tekan tombol Enter untuk kembali ... ")
 
         Tools.sleep(1)
@@ -67,7 +66,7 @@ class OrderController:
         OrderController.index(self)
 
     def place_order(self, orders):
-        menu_id = Tools.validate_number_input('    Masukkan menu id atau 0 jika sudah selesai order : ')
+        menu_id = Tools.validate_number_input('    Masukkan kode menu atau 0 jika sudah selesai order : ')
 
         if menu_id == 0:
             return orders
